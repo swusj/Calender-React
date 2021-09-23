@@ -1,0 +1,149 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: content-box;
+}
+.calender {
+	width: 360px;
+	height: 455px;
+	border: 1px solid;
+}
+
+.calender .top {
+	padding: 0 25px 25px 25px;
+	width: 310px;
+	height: 60px;
+}
+
+.calender .dragable {
+	width: 100%;
+	height: 25px;
+	/* background-color: burlywood; */
+}
+.calender .dragable .clock {
+	width: 165px;
+	height: 45px;
+}
+.calender .dragable .today-time {
+	width: 165px;
+	padding-top: 15px;
+	height: 10px;
+}
+
+.today-time span {
+	position: relative;
+	top: 15px;
+}
+
+.main {
+	border-top: solid 1px;
+	padding: 0 12px;
+	width: 336px;
+	height: 344px;
+	position: relative;
+}
+.calendar-top {
+	width: 100%;
+	height: 27px;
+}
+.calender-content {
+	width: 100%;
+	height: 259px;
+}
+
+.description {
+	padding-left: 13px;
+	height: 37px;
+	display: float;
+}
+
+.week {
+	width: 100%;
+	height: 48px;
+	display: flex;
+}
+.item {
+	width: 48px;
+	height: 37px;
+	text-align: center;
+}
+.button {
+	width: 48px;
+	height: 37px;
+	text-align: center;
+	float: right;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.arrow {
+	width: 10px;
+	height: 10px;
+	border-top: 1px solid;
+	border-left: 1px solid;
+}
+
+.arrow-next {
+	transform: translate(0, -3.53px) rotate(225deg);
+}
+
+.arrow-prev {
+	transform: translate(0, 3.53px) rotate(45deg);
+}
+
+.calender-content td {
+	border: solid 2px;
+	width: 42px;
+	text-align: center;
+}
+
+.content {
+	width: 336px;
+	height: 317px;
+	overflow: hidden;
+	position: absolute;
+	top: 27px;
+	left: 13px;
+}
+
+.month-content {
+	width: 100%;
+	height: 317px;
+}
+
+.month-content td {
+	border: solid 2px;
+	text-align: center;
+}
+
+.curdate {
+	border: solid 2px;
+	width: auto;
+	text-align: center;
+	height: calc(100% - 4px);
+	display: flex;
+}
+
+.carousel-container {
+	width: 100%;
+	height: 259px;
+	position: relative;
+}
+
+/* 存三个日历的轮播图,是会改变top的那个 */
+.calender-carousel {
+	height: calc(259px * 3);
+	width: 100%;
+	position: absolute;
+	top: -259px;
+}
+
+/* 存三个月的轮播图,是会改变top的那个 */
+.month_carousel {
+	height: calc(317px * 1);
+	width: 100%;
+	position: absolute;
+	top: 0px;
+	top: -317px;
+}

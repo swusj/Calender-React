@@ -1,0 +1,51 @@
+/* 禁止选中文字 */
+* {
+	-moz-user-select: none; /*火狐*/
+	-webkit-user-select: none; /*webkit浏览器*/
+	-ms-user-select: none; /*IE10*/
+	-khtml-user-select: none; /*早期浏览器*/
+	user-select: none;
+}
+.calender {
+	font-family: "Segoe UI", Times, serif;
+}
+.clock {
+	font-size: 46px;
+	line-height: 35px;
+}
+.today-time {
+	font-size: 14px;
+	line-height: 100%;
+}
+
+table td {
+	margin: 1px;
+}
+.calendar-top {
+	font-size: 15px;
+}
+
+.description {
+	line-height: 37px;
+}
+.item {
+	line-height: 48px;
+}
+
+.curdate {
+	line-height: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+.carousel-container {
+	overflow: hidden;
+}
+
+.trans {
+	transition: top 0.15s;
+}
+
+.today-time {
+	cursor: pointer;
+}
