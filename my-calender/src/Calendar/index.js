@@ -37,17 +37,31 @@ class Calender extends React.Component {
     this.state.todayDate.dayOfOne = getDayOfOne(this.state.todayDate.year, this.state.todayDate.month);
     this.state.showDate = Object.assign({}, this.state.todayDate);
     this.calendarDayRef = React.createRef();
+    this.calendarBodyRef = React.createRef();
     this.calendarMonthAndYearRef = React.createRef();
     this.calendarRef = React.createRef();
   }
   // 点击x历头的处理函数
   forwordTransition() {
+    // console.log(this.calendarBodyRef);
     switch (this.state.curState) {
       case SHOWING_STATE.DAY:
-        this.setState({ curState: SHOWING_STATE.MONTH });
+        this.calendarBodyRef.current.classList.add("calendar-main-tbody-shrink");
+        setTimeout(() => {
+          this.setState({ curState: SHOWING_STATE.MONTH });
+        }, 200);
+        setTimeout(() => {
+          this.calendarBodyRef.current.classList.remove("calendar-main-tbody-shrink");
+        }, 500);
         break;
       case SHOWING_STATE.MONTH:
-        this.setState({ curState: SHOWING_STATE.YEAR });
+        this.calendarBodyRef.current.classList.add("calendar-main-tbody-shrink");
+        setTimeout(() => {
+          this.setState({ curState: SHOWING_STATE.YEAR });
+        }, 200);
+        setTimeout(() => {
+          this.calendarBodyRef.current.classList.remove("calendar-main-tbody-shrink");
+        }, 500);
         break;
       case SHOWING_STATE.YEAR:
         break;
@@ -61,6 +75,7 @@ class Calender extends React.Component {
     switch (this.state.curState) {
       case SHOWING_STATE.DAY:
         this.calendarDayRef.current.classList.add("carousel-day-prev");
+        // 如果不这样，样式会被立马移除
         setTimeout(() => {
           this.calendarDayRef.current.classList.remove("carousel-day-prev");
           this.setState({ showDate: Object.assign(this.state.showDate, getPrevMonth(this.state.showDate.year, this.state.showDate.month)) });
@@ -197,6 +212,7 @@ class Calender extends React.Component {
               handleItemClick={(data) => {
                 this.handleItemClick(data);
               }}
+              calendarBodyRef={this.calendarBodyRef}
               calendarDayRef={this.calendarDayRef}
               calendarMonthAndYearRef={this.calendarMonthAndYearRef}
             />

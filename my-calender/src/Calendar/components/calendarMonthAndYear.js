@@ -3,6 +3,7 @@ import { NUM_OF_MONTH_YEAR_ROW_ITEM, NUM_OF_MONTH_YEAR_ITEM, NUM_OF_NEAR_YEARS, 
 
 import { group, getPrevYear, getNextYear, getPrevTenYear, getNextTenYear } from "../utils.js";
 
+// 月、年日历项
 class CalendarMonthOrYearItem extends React.Component {
   constructor(props) {
     super(props);
@@ -35,6 +36,7 @@ class CalendarMonthOrYearItem extends React.Component {
   }
 }
 
+// 月历
 class CalendarMonth extends React.Component {
   constructor(props) {
     super(props);
@@ -104,6 +106,7 @@ function createMonthData(showDate, todayDate) {
   return monthData;
 }
 
+// 年历
 class CalendarYear extends React.Component {
   constructor(props) {
     super(props);

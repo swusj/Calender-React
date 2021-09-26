@@ -53,6 +53,7 @@ $blue-3: rgb(153, 201, 239);
     &-clock {
       font-size: 46px;
       line-height: 35px;
+      height: 35px;
     }
     &-todaytime {
       width: 100px;
@@ -118,7 +119,7 @@ $blue-3: rgb(153, 201, 239);
     &-tbody {
       width: 100%;
       height: 295px;
-      background-color: blueviolet;
+      // background-color: blueviolet;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -194,8 +195,38 @@ $blue-3: rgb(153, 201, 239);
         position: relative;
         overflow: hidden;
       }
+      &-shrink {
+        animation: 0.5s shrink-1;
+        // transform: scale(0.75);
+        // transition: all 0.15s;
+      }
     }
   }
+}
+
+@keyframes shrink-1 {
+  39% {
+    transform: scale(0.75);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.shrink-container {
+  width: 100%;
+  height: 295px;
+  overflow: hidden;
+}
+.shrink {
+  transform: scale(0.75);
+  transition: all 0.15s;
 }
 
 .carousel-day {
@@ -207,7 +238,6 @@ $blue-3: rgb(153, 201, 239);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   &-prev {
     transition: top 0.15s;
     top: 0px;

@@ -107,7 +107,13 @@ class CalenderTbody extends React.Component {
       default:
         break;
     }
-    return <div className="calendar-main-tbody">{tbody}</div>;
+    return (
+      <div className="shrink-container">
+        <div className="calendar-main-tbody" ref={this.props.calendarBodyRef}>
+          {tbody}
+        </div>
+      </div>
+    );
   }
 }
 
@@ -133,6 +139,7 @@ class CalenderMain extends React.Component {
           handleItemClick={(data) => {
             this.props.handleItemClick(data);
           }}
+          calendarBodyRef={this.props.calendarBodyRef}
           calendarDayRef={this.props.calendarDayRef}
           calendarMonthAndYearRef={this.props.calendarMonthAndYearRef}
         />
