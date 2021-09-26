@@ -105,23 +105,6 @@ function getNextTenYear(year, month) {
   return NextTenYear;
 }
 
-// 添加link（带记忆功能）
-const createCss = (function () {
-  var cache = [];
-  return function (path) {
-    if (!cache.includes(path)) {
-      const head = document.getElementsByTagName("head")[0];
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.media = "screen";
-      link.type = "text/css";
-      link.href = path;
-      head.appendChild(link);
-      cache.push(path);
-    }
-  };
-})();
-
 // 生成时间戳
 function getTimestamp(year, month, date) {
   const mydate = new Date(year, month, date);
@@ -159,7 +142,6 @@ export {
   getNextYear,
   getPrevTenYear,
   getNextTenYear,
-  createCss,
   getTimestamp,
   group,
 };

@@ -35,9 +35,13 @@ class Calender extends React.Component {
     this.state.todayDate.dayNum = getDayNum(this.state.todayDate.year, this.state.todayDate.month);
     this.state.todayDate.dayOfOne = getDayOfOne(this.state.todayDate.year, this.state.todayDate.month);
     this.state.showDate = Object.assign({}, this.state.todayDate);
-    this.calendarDayRef = React.createRef();
+    // x历体DOM
     this.calendarBodyRef = React.createRef();
+    // 日历DOM
+    this.calendarDayRef = React.createRef();
+    // 月、年DOM
     this.calendarMonthAndYearRef = React.createRef();
+    // 整个日历组件DOM
     this.calendarRef = React.createRef();
   }
   // 点击x历头的处理函数
@@ -173,8 +177,9 @@ class Calender extends React.Component {
     }
   }
 
+  // 点击顶部蓝字的处理函数
   init() {
-    if (this.state.curState === SHOWING_STATE.MONTH)
+    if (this.state.curState === SHOWING_STATE.MONTH) {
       shrinkEnlargeAni(
         this.calendarBodyRef.current,
         () =>
@@ -184,8 +189,15 @@ class Calender extends React.Component {
           }),
         "calendar-main-tbody-enlarge"
       );
+    } else {
+      this.setState({
+        showDate: Object.assign({}, this.state.todayDate),
+        curState: SHOWING_STATE.DAY,
+      });
+    }
   }
 
+  // 点击右上角叉叉的处理函数
   handleClickClose() {
     this.setState({ isShow: false });
   }
