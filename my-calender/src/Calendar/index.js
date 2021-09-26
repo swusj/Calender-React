@@ -12,10 +12,11 @@ import {
   getNextTenYear,
   getTimestamp,
 } from "./utils.js";
-import { TRANS_TIME, SHOWING_STATE, NUM_OF_NEAR_YEARS } from "./config.js";
+import { SHOWING_STATE } from "./config.js";
 import CalenderHeader from "./components/calenderHead";
 import CalenderMain from "./components/calenderMain";
 import CalendarDrag from "./components/calendarDrag";
+import { shrinkEnlargeAni, carouselAni } from "./animation.js";
 
 class Calender extends React.Component {
   constructor(props) {
@@ -28,8 +29,6 @@ class Calender extends React.Component {
         date: myDate.getDate(),
       },
       curState: SHOWING_STATE.DAY,
-      // curState: SHOWING_STATE.MONTH,
-      // curState: SHOWING_STATE.YEAR,
       isShow: true,
     };
 
@@ -46,22 +45,10 @@ class Calender extends React.Component {
     // console.log(this.calendarBodyRef);
     switch (this.state.curState) {
       case SHOWING_STATE.DAY:
-        this.calendarBodyRef.current.classList.add("calendar-main-tbody-shrink");
-        setTimeout(() => {
-          this.setState({ curState: SHOWING_STATE.MONTH });
-        }, 200);
-        setTimeout(() => {
-          this.calendarBodyRef.current.classList.remove("calendar-main-tbody-shrink");
-        }, 500);
+        shrinkEnlargeAni(this.calendarBodyRef.current, () => this.setState({ curState: SHOWING_STATE.MONTH }), "calendar-main-tbody-shrink");
         break;
       case SHOWING_STATE.MONTH:
-        this.calendarBodyRef.current.classList.add("calendar-main-tbody-shrink");
-        setTimeout(() => {
-          this.setState({ curState: SHOWING_STATE.YEAR });
-        }, 200);
-        setTimeout(() => {
-          this.calendarBodyRef.current.classList.remove("calendar-main-tbody-shrink");
-        }, 500);
+        shrinkEnlargeAni(this.calendarBodyRef.current, () => this.setState({ curState: SHOWING_STATE.YEAR }), "calendar-main-tbody-shrink");
         break;
       case SHOWING_STATE.YEAR:
         break;
@@ -74,26 +61,31 @@ class Calender extends React.Component {
     // 我希望能在这里用到表格组件的ref，然后再更改其高度什么的
     switch (this.state.curState) {
       case SHOWING_STATE.DAY:
-        this.calendarDayRef.current.classList.add("carousel-day-prev");
-        // 如果不这样，样式会被立马移除
-        setTimeout(() => {
-          this.calendarDayRef.current.classList.remove("carousel-day-prev");
-          this.setState({ showDate: Object.assign(this.state.showDate, getPrevMonth(this.state.showDate.year, this.state.showDate.month)) });
-        }, 150);
+        carouselAni(
+          this.calendarDayRef.current,
+          () => {
+            this.setState({ showDate: Object.assign(this.state.showDate, getPrevMonth(this.state.showDate.year, this.state.showDate.month)) });
+          },
+          "carousel-day-prev"
+        );
         break;
       case SHOWING_STATE.MONTH:
-        this.calendarMonthAndYearRef.current.classList.add("carousel-month-and-year-prev");
-        setTimeout(() => {
-          this.calendarMonthAndYearRef.current.classList.remove("carousel-month-and-year-prev");
-          this.setState({ showDate: Object.assign(this.state.showDate, getPrevYear(this.state.showDate.year, this.state.showDate.month)) });
-        }, 150);
+        carouselAni(
+          this.calendarMonthAndYearRef.current,
+          () => {
+            this.setState({ showDate: Object.assign(this.state.showDate, getPrevYear(this.state.showDate.year, this.state.showDate.month)) });
+          },
+          "carousel-month-and-year-prev"
+        );
         break;
       case SHOWING_STATE.YEAR:
-        this.calendarMonthAndYearRef.current.classList.add("carousel-month-and-year-prev");
-        setTimeout(() => {
-          this.calendarMonthAndYearRef.current.classList.remove("carousel-month-and-year-prev");
-          this.setState({ showDate: Object.assign(this.state.showDate, getPrevTenYear(this.state.showDate.year, this.state.showDate.month)) });
-        }, 150);
+        carouselAni(
+          this.calendarMonthAndYearRef.current,
+          () => {
+            this.setState({ showDate: Object.assign(this.state.showDate, getPrevTenYear(this.state.showDate.year, this.state.showDate.month)) });
+          },
+          "carousel-month-and-year-prev"
+        );
         break;
       default:
         break;
@@ -103,25 +95,31 @@ class Calender extends React.Component {
   handleClickNext() {
     switch (this.state.curState) {
       case SHOWING_STATE.DAY:
-        this.calendarDayRef.current.classList.add("carousel-day-next");
-        setTimeout(() => {
-          this.calendarDayRef.current.classList.remove("carousel-day-next");
-          this.setState({ showDate: Object.assign(this.state.showDate, getNextMonth(this.state.showDate.year, this.state.showDate.month)) });
-        }, 150);
+        carouselAni(
+          this.calendarDayRef.current,
+          () => {
+            this.setState({ showDate: Object.assign(this.state.showDate, getNextMonth(this.state.showDate.year, this.state.showDate.month)) });
+          },
+          "carousel-day-next"
+        );
         break;
       case SHOWING_STATE.MONTH:
-        this.calendarMonthAndYearRef.current.classList.add("carousel-month-and-year-next");
-        setTimeout(() => {
-          this.calendarMonthAndYearRef.current.classList.remove("carousel-month-and-year-next");
-          this.setState({ showDate: Object.assign(this.state.showDate, getNextYear(this.state.showDate.year, this.state.showDate.month)) });
-        }, 150);
+        carouselAni(
+          this.calendarMonthAndYearRef.current,
+          () => {
+            this.setState({ showDate: Object.assign(this.state.showDate, getNextYear(this.state.showDate.year, this.state.showDate.month)) });
+          },
+          "carousel-month-and-year-next"
+        );
         break;
       case SHOWING_STATE.YEAR:
-        this.calendarMonthAndYearRef.current.classList.add("carousel-month-and-year-next");
-        setTimeout(() => {
-          this.calendarMonthAndYearRef.current.classList.remove("carousel-month-and-year-next");
-          this.setState({ showDate: Object.assign(this.state.showDate, getNextTenYear(this.state.showDate.year, this.state.showDate.month)) });
-        }, 150);
+        carouselAni(
+          this.calendarMonthAndYearRef.current,
+          () => {
+            this.setState({ showDate: Object.assign(this.state.showDate, getNextTenYear(this.state.showDate.year, this.state.showDate.month)) });
+          },
+          "carousel-month-and-year-next"
+        );
         break;
       default:
         break;
@@ -136,29 +134,39 @@ class Calender extends React.Component {
         break;
       case SHOWING_STATE.MONTH:
         const month = data.slice(0, -1) - 1;
-        this.setState({
-          showDate: {
-            year: this.state.showDate.year,
-            month: month,
-            date: this.state.showDate.date,
-            dayNum: getDayNum(this.state.showDate.year, month),
-            dayOfOne: getDayOfOne(this.state.showDate.year, month),
-          },
-          curState: SHOWING_STATE.DAY,
-        });
+        shrinkEnlargeAni(
+          this.calendarBodyRef.current,
+          () =>
+            this.setState({
+              showDate: {
+                year: this.state.showDate.year,
+                month: month,
+                date: this.state.showDate.date,
+                dayNum: getDayNum(this.state.showDate.year, month),
+                dayOfOne: getDayOfOne(this.state.showDate.year, month),
+              },
+              curState: SHOWING_STATE.DAY,
+            }),
+          "calendar-main-tbody-enlarge"
+        );
         break;
       case SHOWING_STATE.YEAR:
         const year = Number(data);
-        this.setState({
-          showDate: {
-            year: year,
-            month: this.state.showDate.month,
-            date: this.state.showDate.date,
-            dayNum: getDayNum(year, this.state.showDate.month),
-            dayOfOne: getDayOfOne(year, this.state.showDate.month),
-          },
-          curState: SHOWING_STATE.MONTH,
-        });
+        shrinkEnlargeAni(
+          this.calendarBodyRef.current,
+          () =>
+            this.setState({
+              showDate: {
+                year: year,
+                month: this.state.showDate.month,
+                date: this.state.showDate.date,
+                dayNum: getDayNum(year, this.state.showDate.month),
+                dayOfOne: getDayOfOne(year, this.state.showDate.month),
+              },
+              curState: SHOWING_STATE.MONTH,
+            }),
+          "calendar-main-tbody-enlarge"
+        );
         break;
       default:
         break;
@@ -166,10 +174,16 @@ class Calender extends React.Component {
   }
 
   init() {
-    this.setState({
-      showDate: Object.assign({}, this.state.todayDate),
-      curState: SHOWING_STATE.DAY,
-    });
+    if (this.state.curState === SHOWING_STATE.MONTH)
+      shrinkEnlargeAni(
+        this.calendarBodyRef.current,
+        () =>
+          this.setState({
+            showDate: Object.assign({}, this.state.todayDate),
+            curState: SHOWING_STATE.DAY,
+          }),
+        "calendar-main-tbody-enlarge"
+      );
   }
 
   handleClickClose() {
