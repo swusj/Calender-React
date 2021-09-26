@@ -1,7 +1,7 @@
 import React from "react";
 import { NUM_OF_MONTH_YEAR_ROW_ITEM, NUM_OF_MONTH_YEAR_ITEM, NUM_OF_NEAR_YEARS, MONTH_NUM_OF_YEAR, ITEM_STATE } from "../config.js";
 
-import { group } from "../utils.js";
+import { group, getPrevYear, getNextYear, getPrevTenYear, getNextTenYear } from "../utils.js";
 
 class CalendarMonthOrYearItem extends React.Component {
   constructor(props) {
@@ -58,13 +58,25 @@ class CalendarMonth extends React.Component {
     );
   }
   render() {
-    const monthData = createMonthData(this.props.showDate, this.props.todayDate);
-    let groupmonthData = group(monthData, NUM_OF_MONTH_YEAR_ROW_ITEM);
+    const monthData_now = createMonthData(this.props.showDate, this.props.todayDate);
+    const monthData_prev = createMonthData(getPrevYear(this.props.showDate.year, this.props.showDate.month), this.props.todayDate);
+    const monthData_next = createMonthData(getNextYear(this.props.showDate.year, this.props.showDate.month), this.props.todayDate);
+    let groupMonthData_now = group(monthData_now, NUM_OF_MONTH_YEAR_ROW_ITEM);
+    let groupMonthData_prev = group(monthData_prev, NUM_OF_MONTH_YEAR_ROW_ITEM);
+    let groupMonthData_next = group(monthData_next, NUM_OF_MONTH_YEAR_ROW_ITEM);
     return (
       <div className="calendar-main-tbody-month-and-year">
-        {groupmonthData.map((row, index) => {
-          return this.renderRow(row, index);
-        })}
+        <div className="carousel-month-and-year" ref={this.props.calendarMonthAndYearRef}>
+          {groupMonthData_prev.map((row, index) => {
+            return this.renderRow(row, index);
+          })}
+          {groupMonthData_now.map((row, index) => {
+            return this.renderRow(row, index);
+          })}
+          {groupMonthData_next.map((row, index) => {
+            return this.renderRow(row, index);
+          })}
+        </div>
       </div>
     );
   }
@@ -115,13 +127,25 @@ class CalendarYear extends React.Component {
     );
   }
   render() {
-    const yearData = createYearData(this.props.showDate, this.props.todayDate);
-    let groupmonthData = group(yearData, NUM_OF_MONTH_YEAR_ROW_ITEM);
+    const yearData_now = createYearData(this.props.showDate, this.props.todayDate);
+    const yearData_prev = createYearData(getPrevTenYear(this.props.showDate.year, this.props.showDate.month), this.props.todayDate);
+    const yearData_next = createYearData(getNextTenYear(this.props.showDate.year, this.props.showDate.month), this.props.todayDate);
+    let groupYearData_now = group(yearData_now, NUM_OF_MONTH_YEAR_ROW_ITEM);
+    let groupYearData_prev = group(yearData_prev, NUM_OF_MONTH_YEAR_ROW_ITEM);
+    let groupYearData_next = group(yearData_next, NUM_OF_MONTH_YEAR_ROW_ITEM);
     return (
       <div className="calendar-main-tbody-month-and-year">
-        {groupmonthData.map((row, index) => {
-          return this.renderRow(row, index);
-        })}
+        <div className="carousel-month-and-year" ref={this.props.calendarMonthAndYearRef}>
+          {groupYearData_prev.map((row, index) => {
+            return this.renderRow(row, index);
+          })}
+          {groupYearData_now.map((row, index) => {
+            return this.renderRow(row, index);
+          })}
+          {groupYearData_next.map((row, index) => {
+            return this.renderRow(row, index);
+          })}
+        </div>
       </div>
     );
   }

@@ -40,7 +40,9 @@ class CalenderHeader extends React.Component {
     return (
       <div className="calendar-header">
         <Clock isNeedZero={this.props.isNeedZero} />
-        <div className="calendar-header-todaytime">{headStr}</div>
+        <div className="calendar-header-todaytime" onClick={this.props.init}>
+          {headStr}
+        </div>
       </div>
     );
   }

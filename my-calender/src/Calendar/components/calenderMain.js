@@ -75,6 +75,7 @@ class CalenderTbody extends React.Component {
               handleItemClick={(data) => {
                 this.props.handleItemClick(data);
               }}
+              calendarDayRef={this.props.calendarDayRef}
             />
           </>
         );
@@ -87,6 +88,7 @@ class CalenderTbody extends React.Component {
             handleItemClick={(data) => {
               this.props.handleItemClick(data);
             }}
+            calendarMonthAndYearRef={this.props.calendarMonthAndYearRef}
           />
         );
         break;
@@ -98,6 +100,7 @@ class CalenderTbody extends React.Component {
             handleItemClick={(data) => {
               this.props.handleItemClick(data);
             }}
+            calendarMonthAndYearRef={this.props.calendarMonthAndYearRef}
           />
         );
         break;
@@ -130,6 +133,8 @@ class CalenderMain extends React.Component {
           handleItemClick={(data) => {
             this.props.handleItemClick(data);
           }}
+          calendarDayRef={this.props.calendarDayRef}
+          calendarMonthAndYearRef={this.props.calendarMonthAndYearRef}
         />
       </div>
     );

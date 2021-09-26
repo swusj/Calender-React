@@ -21,9 +21,27 @@ $blue-3: rgb(153, 201, 239);
   color: white;
   border: 1px solid $gray-1;
   font-family: "Segoe UI", Times, serif;
-  &-dragable {
-    height: 25px;
+  &-top {
     width: 100%;
+    display: flex;
+    &-dragable {
+      position: relative;
+      z-index: 1;
+      height: 25px;
+      width: 330px;
+      cursor: move;
+    }
+    &-close {
+      width: 30px;
+      height: 25px;
+      background: url(./assets/close.png) center no-repeat;
+      background-size: 40%;
+      transition: background-image, background-color 0.1s;
+      &:hover {
+        background-image: url(./assets/close-hover.png);
+        background-color: red;
+      }
+    }
   }
   &-header {
     box-sizing: border-box;
@@ -37,7 +55,7 @@ $blue-3: rgb(153, 201, 239);
       line-height: 35px;
     }
     &-todaytime {
-      width: 95px;
+      width: 100px;
       margin-top: 15px;
       font-size: 14px;
       color: $blue-3;
@@ -100,15 +118,16 @@ $blue-3: rgb(153, 201, 239);
     &-tbody {
       width: 100%;
       height: 295px;
-      // background-color: blueviolet;
+      background-color: blueviolet;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      // transform: scale(0);
+      //芜湖 聪明的scale
       &-row {
-        // flex-grow: 1;
         display: flex;
         justify-content: space-between;
-        outline: 1px solid black;
+        flex-shrink: 1;
         &-item,
         &-item-day,
         &-item-month {
@@ -118,8 +137,6 @@ $blue-3: rgb(153, 201, 239);
           justify-content: center;
           align-items: center;
           width: 45px;
-          //   background-color: black;
-          // outline: 1px solid black;
         }
         &-item-day,
         &-item {
@@ -168,26 +185,55 @@ $blue-3: rgb(153, 201, 239);
         }
       }
       &-day {
-        // background-color: blue;
-
-        // flex-grow: 6;
+        position: relative;
         height: 252px;
         overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        outline: 1px solid black;
       }
       &-month-and-year {
         height: 295px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
+        position: relative;
+        overflow: hidden;
       }
     }
   }
 }
 
 .carousel-day {
-  height: 756px;
+  $singleHeight: 252px;
+  width: 100%;
+  position: absolute;
+  top: -$singleHeight;
+  height: calc(#{$singleHeight} * 3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &-prev {
+    transition: top 0.15s;
+    top: 0px;
+  }
+  &-next {
+    transition: top 0.15s;
+    top: calc(-#{$singleHeight} * 2);
+  }
+}
+
+.carousel-month-and-year {
+  $singleHeight: 295px;
+  width: 100%;
+  position: absolute;
+  top: -$singleHeight;
+  height: calc(#{$singleHeight} * 3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  outline: 1px solid blue;
+  &-prev {
+    transition: top 0.15s;
+    top: 0px;
+  }
+  &-next {
+    transition: top 0.15s;
+    top: calc(-#{$singleHeight} * 2);
+  }
 }

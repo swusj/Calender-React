@@ -66,7 +66,7 @@ class CalendarDay extends React.Component {
     let groupCalData_next = group(calData_next, NUM_OF_CANLENDER_ROW_ITEM);
     return (
       <div className="calendar-main-tbody-day">
-        <div className="carousel-day">
+        <div className="carousel-day" ref={this.props.calendarDayRef}>
           {groupCalData_prev.map((row, index) => {
             return this.renderRow(row, index);
           })}
