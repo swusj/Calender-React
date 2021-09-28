@@ -1,20 +1,17 @@
-import { MONTH_OF_LEAP_YEAR, MONTH_OF_COM_YEAR, DAY_CHENGE, NUM_OF_NEAR_YEARS } from "./config.js";
+import { MONTH_OF_LEAP_YEAR, MONTH_OF_COM_YEAR, DAY_CHENGE, NUM_OF_NEAR_YEARS } from './config.js';
 
 // 获取上个月日期对象的函数
 function getPrevMonth(year, month) {
-  let lastMonth = {};
+  let prevMonth = {};
   if (month === 0) {
     //如果是一月份
-    lastMonth.month = 11;
-    lastMonth.year = year - 1;
+    prevMonth.month = 11;
+    prevMonth.year = year - 1;
   } else {
-    lastMonth.month = month - 1;
-    lastMonth.year = year;
+    prevMonth.month = month - 1;
+    prevMonth.year = year;
   }
-  lastMonth.dayNum = getDayNum(lastMonth.year, lastMonth.month);
-  lastMonth.dayOfOne = getDayOfOne(lastMonth.year, lastMonth.month);
-  // console.log(lastMonth);
-  return lastMonth;
+  return prevMonth;
 }
 
 // 获取下个月日期对象的函数
@@ -28,8 +25,6 @@ function getNextMonth(year, month) {
     nextMonth.month = month + 1;
     nextMonth.year = year;
   }
-  nextMonth.dayNum = getDayNum(nextMonth.year, nextMonth.month);
-  nextMonth.dayOfOne = getDayOfOne(nextMonth.year, nextMonth.month);
   return nextMonth;
 }
 
@@ -66,8 +61,6 @@ function getPrevYear(year, month) {
     LastYear.year = year - 1;
   }
   LastYear.month = month;
-  LastYear.dayNum = getDayNum(LastYear.year, LastYear.month);
-  LastYear.dayOfOne = getDayOfOne(LastYear.year, LastYear.month);
   return LastYear;
 }
 
@@ -76,8 +69,6 @@ function getNextYear(year, month) {
   let nextYear = {};
   nextYear.year = year + 1;
   nextYear.month = month;
-  nextYear.dayNum = getDayNum(nextYear.year, nextYear.month);
-  nextYear.dayOfOne = getDayOfOne(nextYear.year, nextYear.month);
   return nextYear;
 }
 
@@ -90,8 +81,6 @@ function getPrevTenYear(year, month) {
     LastTenYear.year = year - NUM_OF_NEAR_YEARS;
   }
   LastTenYear.month = month;
-  LastTenYear.dayNum = getDayNum(LastTenYear.year, LastTenYear.month);
-  LastTenYear.dayOfOne = getDayOfOne(LastTenYear.year, LastTenYear.month);
   return LastTenYear;
 }
 
@@ -100,8 +89,6 @@ function getNextTenYear(year, month) {
   let NextTenYear = {};
   NextTenYear.year = year + NUM_OF_NEAR_YEARS;
   NextTenYear.month = month;
-  NextTenYear.dayNum = getDayNum(NextTenYear.year, NextTenYear.month);
-  NextTenYear.dayOfOne = getDayOfOne(NextTenYear.year, NextTenYear.month);
   return NextTenYear;
 }
 

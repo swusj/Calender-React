@@ -1,6 +1,6 @@
 import React from "react";
-// import "../index.scss";
-import { createClockStr } from "../time.js";
+import { createClockStr } from "../../time.js";
+import "./calendarHead.scss";
 
 class Clock extends React.Component {
   constructor(props) {

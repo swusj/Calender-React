@@ -1,0 +1,19 @@
+.carousel-month-and-year {
+  $singleHeight: 295px;
+  width: 100%;
+  position: absolute;
+  top: -$singleHeight;
+  height: calc(#{$singleHeight} * 3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  outline: 1px solid blue;
+  &-prev {
+    transition: top 0.15s;
+    top: 0px;
+  }
+  &-next {
+    transition: top 0.15s;
+    top: calc(-#{$singleHeight} * 2);
+  }
+}

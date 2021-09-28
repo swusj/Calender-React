@@ -1,0 +1,27 @@
+@import "../../assets/style/color.scss";
+.calendar-header {
+  box-sizing: border-box;
+  height: 85px;
+  width: 100%;
+  padding: 0 25px 25px;
+  // padding: 25px;
+  border-bottom: 1px solid $gray-1;
+  &-clock {
+    font-size: 46px;
+    line-height: 35px;
+    height: 35px;
+  }
+  &-todaytime {
+    width: 100px;
+    margin-top: 15px;
+    font-size: 14px;
+    color: $blue-3;
+    cursor: pointer;
+    &:hover {
+      color: $gray-2;
+    }
+    &:active {
+      color: $gray-3;
+    }
+  }
+}

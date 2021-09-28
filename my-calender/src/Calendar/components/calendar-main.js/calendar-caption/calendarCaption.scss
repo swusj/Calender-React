@@ -1,0 +1,36 @@
+@import '../../../assets/style/color.scss';
+.calendar-main-caption {
+  padding-left: 13px;
+  height: 23px;
+  display: flex;
+  justify-content: space-between;
+  //   background-color: yellowgreen;
+  color: $gray-3;
+  &-text {
+    font-size: 15px;
+  }
+  &-arrow {
+    width: 96px;
+    // height: 37px;
+    display: flex;
+    // background-color: black;
+    justify-content: space-around;
+    align-items: center;
+    &-prev,
+    &-next {
+      flex-basis: 1;
+      width: 48px;
+      //   background-color: brown;
+      width: 10px;
+      height: 10px;
+      border-top: 1px solid;
+      border-left: 1px solid;
+    }
+    &-prev {
+      transform: translate(0, 3.53px) rotate(45deg);
+    }
+    &-next {
+      transform: translate(0, -3.53px) rotate(225deg);
+    }
+  }
+}

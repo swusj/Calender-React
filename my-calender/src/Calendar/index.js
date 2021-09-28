@@ -1,22 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.scss";
-import {
-  getDayNum,
-  getDayOfOne,
-  getPrevMonth,
-  getPrevYear,
-  getPrevTenYear,
-  getNextMonth,
-  getNextYear,
-  getNextTenYear,
-  getTimestamp,
-} from "./utils.js";
-import { SHOWING_STATE } from "./config.js";
-import CalenderHeader from "./components/calenderHead";
-import CalenderMain from "./components/calenderMain";
-import CalendarDrag from "./components/calendarDrag";
-import { shrinkEnlargeAni, carouselAni } from "./animation.js";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.scss';
+import { getPrevMonth, getPrevYear, getPrevTenYear, getNextMonth, getNextYear, getNextTenYear, getTimestamp } from './utils.js';
+import { SHOWING_STATE } from './config.js';
+import CalenderHeader from './components/calendar-head.js/calenderHead';
+import CalenderMain from './components/calendar-main.js/calenderMain';
+import CalendarTop from './components/calendar-top/calendarTop';
+import { shrinkEnlargeAni, carouselAni } from './animation.js';
 
 class Calender extends React.Component {
   constructor(props) {
@@ -31,9 +21,6 @@ class Calender extends React.Component {
       curState: SHOWING_STATE.DAY,
       isShow: true,
     };
-
-    this.state.todayDate.dayNum = getDayNum(this.state.todayDate.year, this.state.todayDate.month);
-    this.state.todayDate.dayOfOne = getDayOfOne(this.state.todayDate.year, this.state.todayDate.month);
     this.state.showDate = Object.assign({}, this.state.todayDate);
     // x历体DOM
     this.calendarBodyRef = React.createRef();
@@ -49,10 +36,10 @@ class Calender extends React.Component {
     // console.log(this.calendarBodyRef);
     switch (this.state.curState) {
       case SHOWING_STATE.DAY:
-        shrinkEnlargeAni(this.calendarBodyRef.current, () => this.setState({ curState: SHOWING_STATE.MONTH }), "calendar-main-tbody-shrink");
+        shrinkEnlargeAni(this.calendarBodyRef.current, () => this.setState({ curState: SHOWING_STATE.MONTH }), 'calendar-main-tbody-shrink');
         break;
       case SHOWING_STATE.MONTH:
-        shrinkEnlargeAni(this.calendarBodyRef.current, () => this.setState({ curState: SHOWING_STATE.YEAR }), "calendar-main-tbody-shrink");
+        shrinkEnlargeAni(this.calendarBodyRef.current, () => this.setState({ curState: SHOWING_STATE.YEAR }), 'calendar-main-tbody-shrink');
         break;
       case SHOWING_STATE.YEAR:
         break;
@@ -70,7 +57,7 @@ class Calender extends React.Component {
           () => {
             this.setState({ showDate: Object.assign(this.state.showDate, getPrevMonth(this.state.showDate.year, this.state.showDate.month)) });
           },
-          "carousel-day-prev"
+          'carousel-day-prev'
         );
         break;
       case SHOWING_STATE.MONTH:
@@ -79,7 +66,7 @@ class Calender extends React.Component {
           () => {
             this.setState({ showDate: Object.assign(this.state.showDate, getPrevYear(this.state.showDate.year, this.state.showDate.month)) });
           },
-          "carousel-month-and-year-prev"
+          'carousel-month-and-year-prev'
         );
         break;
       case SHOWING_STATE.YEAR:
@@ -88,7 +75,7 @@ class Calender extends React.Component {
           () => {
             this.setState({ showDate: Object.assign(this.state.showDate, getPrevTenYear(this.state.showDate.year, this.state.showDate.month)) });
           },
-          "carousel-month-and-year-prev"
+          'carousel-month-and-year-prev'
         );
         break;
       default:
@@ -104,7 +91,7 @@ class Calender extends React.Component {
           () => {
             this.setState({ showDate: Object.assign(this.state.showDate, getNextMonth(this.state.showDate.year, this.state.showDate.month)) });
           },
-          "carousel-day-next"
+          'carousel-day-next'
         );
         break;
       case SHOWING_STATE.MONTH:
@@ -113,7 +100,7 @@ class Calender extends React.Component {
           () => {
             this.setState({ showDate: Object.assign(this.state.showDate, getNextYear(this.state.showDate.year, this.state.showDate.month)) });
           },
-          "carousel-month-and-year-next"
+          'carousel-month-and-year-next'
         );
         break;
       case SHOWING_STATE.YEAR:
@@ -122,7 +109,7 @@ class Calender extends React.Component {
           () => {
             this.setState({ showDate: Object.assign(this.state.showDate, getNextTenYear(this.state.showDate.year, this.state.showDate.month)) });
           },
-          "carousel-month-and-year-next"
+          'carousel-month-and-year-next'
         );
         break;
       default:
@@ -146,12 +133,10 @@ class Calender extends React.Component {
                 year: this.state.showDate.year,
                 month: month,
                 date: this.state.showDate.date,
-                dayNum: getDayNum(this.state.showDate.year, month),
-                dayOfOne: getDayOfOne(this.state.showDate.year, month),
               },
               curState: SHOWING_STATE.DAY,
             }),
-          "calendar-main-tbody-enlarge"
+          'calendar-main-tbody-enlarge'
         );
         break;
       case SHOWING_STATE.YEAR:
@@ -164,12 +149,10 @@ class Calender extends React.Component {
                 year: year,
                 month: this.state.showDate.month,
                 date: this.state.showDate.date,
-                dayNum: getDayNum(year, this.state.showDate.month),
-                dayOfOne: getDayOfOne(year, this.state.showDate.month),
               },
               curState: SHOWING_STATE.MONTH,
             }),
-          "calendar-main-tbody-enlarge"
+          'calendar-main-tbody-enlarge'
         );
         break;
       default:
@@ -187,7 +170,7 @@ class Calender extends React.Component {
             showDate: Object.assign({}, this.state.todayDate),
             curState: SHOWING_STATE.DAY,
           }),
-        "calendar-main-tbody-enlarge"
+        'calendar-main-tbody-enlarge'
       );
     } else {
       this.setState({
@@ -207,15 +190,12 @@ class Calender extends React.Component {
       <>
         {this.state.isShow && (
           <div className="calendar" ref={this.calendarRef}>
-            <div className="calendar-top">
-              <CalendarDrag dragDom={this.calendarRef} />
-              <div
-                className="calendar-top-close"
-                onClick={() => {
-                  this.handleClickClose();
-                }}
-              ></div>
-            </div>
+            <CalendarTop
+              handleClickClose={() => {
+                this.handleClickClose();
+              }}
+              dragDom={this.calendarRef}
+            />
             <CalenderHeader
               isNeedZero={this.props.isNeedZero}
               curState={this.state.curState}

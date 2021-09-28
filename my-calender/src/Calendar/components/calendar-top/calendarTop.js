@@ -1,4 +1,5 @@
 import React from "react";
+import "./calendarTop.scss";
 
 function CalendarDrag(props) {
   const handleMouseDown = function (e) {
@@ -31,4 +32,13 @@ function CalendarDrag(props) {
   );
 }
 
-export default CalendarDrag;
+const CalendarTop = (props) => {
+  return (
+    <div className="calendar-top">
+      <CalendarDrag dragDom={props.calendarRef} />
+      <div className="calendar-top-close" onClick={props.handleClickClose}></div>
+    </div>
+  );
+};
+
+export default CalendarTop;

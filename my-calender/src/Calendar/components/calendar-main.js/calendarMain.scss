@@ -1,0 +1,98 @@
+@import '../../assets/style/color.scss';
+.calendar-main {
+  height: 345px;
+  padding: 25px 12px 0;
+  width: 100%;
+  &-clickable {
+    &:hover {
+      color: white;
+    }
+    &:active {
+      color: $gray-3;
+    }
+  }
+  &-tbody {
+    width: 100%;
+    height: 295px;
+    // background-color: blueviolet;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &-row {
+      display: flex;
+      justify-content: space-between;
+      flex-shrink: 1;
+      &-item,
+      &-item-day,
+      &-item-month {
+        margin: 1px;
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 45px;
+      }
+      &-item-day,
+      &-item {
+        height: 38px;
+      }
+      &-item-month {
+        height: 70px;
+      }
+      .inactive,
+      .active {
+        &:hover {
+          border: 2px solid $gray-1;
+        }
+        &:active {
+          border: 2px solid $gray-2;
+        }
+      }
+      .inactive {
+        color: $gray-1;
+      }
+      .active {
+        color: $gray-3;
+      }
+      .day-light,
+      .month-and-year-light {
+        background-color: $blue-1;
+        &:hover {
+          border: 2px solid $blue-2;
+        }
+        &:active {
+          border: 2px solid $blue-3;
+        }
+      }
+      .day-light {
+        border: 2px solid $blue-1;
+        background-clip: content-box;
+        padding: 2px;
+      }
+      .month-and-year-light {
+        &:hover {
+          border: 2px solid $blue-2;
+        }
+        &:active {
+          border: 2px solid $blue-3;
+        }
+      }
+    }
+    &-day {
+      position: relative;
+      height: 252px;
+      overflow: hidden;
+    }
+    &-month-and-year {
+      height: 295px;
+      position: relative;
+      overflow: hidden;
+    }
+    &-shrink {
+      animation: 0.5s shrink-1;
+    }
+    &-enlarge {
+      animation: 0.5s enlarge-1;
+    }
+  }
+}

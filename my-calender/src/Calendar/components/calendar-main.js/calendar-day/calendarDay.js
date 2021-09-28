@@ -1,23 +1,23 @@
-import React from "react";
-import { NUM_OF_CANLENDER_ITEM, NUM_OF_CANLENDER_ROW_ITEM, ITEM_STATE } from "../config.js";
-
-import { getPrevMonth, group, getNextMonth } from "../utils.js";
+import React from 'react';
+import { NUM_OF_CANLENDER_ITEM, NUM_OF_CANLENDER_ROW_ITEM, ITEM_STATE } from '../../../config.js';
+import { getPrevMonth, group, getNextMonth, getDayNum, getDayOfOne } from '../../../utils.js';
+import './calendarDay.scss';
 
 class CalendarDayItem extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
-    let itemClass = "";
+    let itemClass = '';
     switch (this.props.state) {
       case ITEM_STATE.NEARLY:
-        itemClass = "inactive";
+        itemClass = 'inactive';
         break;
       case ITEM_STATE.MIDDLE:
-        itemClass = "active";
+        itemClass = 'active';
         break;
       case ITEM_STATE.CURRENT:
-        itemClass = "day-light";
+        itemClass = 'day-light';
         break;
       default:
         break;
@@ -89,14 +89,18 @@ function createCalendarData(showDate, todayDate) {
   let j = 1,
     k = 1;
 
+  const lastMonthDayNum = getDayNum(LastMonth.year, LastMonth.month);
+  const showDateDayNum = getDayNum(showDate.year, showDate.month);
+
+  const showDateDayOfOne = getDayOfOne(showDate.year, showDate.month);
   for (let i = 0; i < NUM_OF_CANLENDER_ITEM; i++) {
-    if (i < showDate.dayOfOne) {
+    if (i < showDateDayOfOne) {
       //上个月的
       calData.push({
-        date: LastMonth.dayNum - showDate.dayOfOne + i + 1,
+        date: lastMonthDayNum - showDateDayOfOne + i + 1,
         state: ITEM_STATE.NEARLY,
       });
-    } else if (i >= showDate.dayOfOne && i < showDate.dayOfOne + showDate.dayNum) {
+    } else if (i >= showDateDayOfOne && i < showDateDayOfOne + showDateDayNum) {
       //中间的
       if (showDate.year === todayDate.year && showDate.month === todayDate.month && j === todayDate.date) {
         //当天

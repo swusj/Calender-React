@@ -1,7 +1,7 @@
 import React from "react";
-import { NUM_OF_MONTH_YEAR_ROW_ITEM, NUM_OF_MONTH_YEAR_ITEM, NUM_OF_NEAR_YEARS, MONTH_NUM_OF_YEAR, ITEM_STATE } from "../config.js";
+import { NUM_OF_MONTH_YEAR_ROW_ITEM, NUM_OF_MONTH_YEAR_ITEM, NUM_OF_NEAR_YEARS, MONTH_NUM_OF_YEAR, ITEM_STATE } from "../../../config.js";
 
-import { group, getPrevYear, getNextYear, getPrevTenYear, getNextTenYear } from "../utils.js";
+import { group, getPrevYear, getNextYear, getPrevTenYear, getNextTenYear } from "../../../utils.js";
 
 // 月、年日历项
 class CalendarMonthOrYearItem extends React.Component {
