@@ -25,6 +25,7 @@ class CalenderTbody extends React.Component {
   constructor(props) {
     super(props);
   }
+  // 来个props标记是正向还是反向，如果是正向，
   render() {
     let tbody = null;
     switch (this.props.curState) {
