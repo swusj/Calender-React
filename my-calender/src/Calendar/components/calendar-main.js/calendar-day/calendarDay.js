@@ -1,6 +1,6 @@
 import React from 'react';
 import { NUM_OF_CANLENDER_ITEM, NUM_OF_CANLENDER_ROW_ITEM, ITEM_STATE } from '../../../config.js';
-import { getPrevMonth, group, getNextMonth, getDayNum, getDayOfOne } from '../../../utils.js';
+import { getPrevMonth, group, getDayNum, getDayOfOne } from '../../../utils.js';
 import './calendarDay.scss';
 
 class CalendarDayItem extends React.Component {

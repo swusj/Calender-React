@@ -23,33 +23,33 @@
   overflow: hidden;
 }
 
-@keyframes shrink-1 {
-  39% {
-    transform: scale(0.75);
-    opacity: 0;
-  }
-  40% {
-    opacity: 0;
-    transform: scale(1.25);
-  }
+// @keyframes shrink-1 {
+//   39% {
+//     transform: scale(0.75);
+//     opacity: 0;
+//   }
+//   40% {
+//     opacity: 0;
+//     transform: scale(1.25);
+//   }
 
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
+//   100% {
+//     opacity: 1;
+//     transform: scale(1);
+//   }
+// }
 
-@keyframes enlarge-1 {
-  39% {
-    transform: scale(1.25);
-    opacity: 0;
-  }
-  40% {
-    opacity: 0;
-    transform: scale(0.75);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
+// @keyframes enlarge-1 {
+//   39% {
+//     transform: scale(1.25);
+//     opacity: 0;
+//   }
+//   40% {
+//     opacity: 0;
+//     transform: scale(0.75);
+//   }
+//   100% {
+//     opacity: 1;
+//     transform: scale(1);
+//   }
+// }

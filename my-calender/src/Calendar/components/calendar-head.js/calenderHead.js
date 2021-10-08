@@ -1,11 +1,11 @@
-import React from "react";
-import { createClockStr } from "../../time.js";
-import "./calendarHead.scss";
+import React from 'react';
+import { createClockStr } from '../../time.js';
+import './calendarHead.scss';
 
 class Clock extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { clockStr: "" };
+    this.state = { clockStr: '' };
   }
 
   changeTime() {
@@ -15,6 +15,8 @@ class Clock extends React.Component {
   }
 
   componentDidMount() {
+    // 下边这个是必须的哦，因为setInterval的func第一次执行不是立马执行的，而是1000ms后执行第一次
+    this.changeTime();
     this.interval = setInterval(() => {
       this.changeTime();
     }, 1000);

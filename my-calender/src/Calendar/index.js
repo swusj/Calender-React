@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.scss';
 import { getPrevMonth, getPrevYear, getPrevTenYear, getNextMonth, getNextYear, getNextTenYear, getTimestamp } from './utils.js';
 import { SCROLL_DIRECTION, SHOWING_STATE, SWITCH_DIRECTION } from './config.js';
@@ -23,7 +22,7 @@ class Calender extends React.Component {
       scrollDirection: '',
     };
     this.state.showDate = Object.assign({}, this.state.todayDate);
-    // 整个日历组件DOM
+    // 整个日历组件DOM,拿来拖拽用
     this.calendarRef = React.createRef();
   }
   // 点击x历头的处理函数

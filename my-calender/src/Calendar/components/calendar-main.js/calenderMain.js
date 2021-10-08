@@ -112,7 +112,6 @@ class CalenderMain extends React.Component {
     super(props);
   }
   render() {
-    // console.log(this.props);
     return (
       <div className="calendar-main">
         <CalenderCaption
