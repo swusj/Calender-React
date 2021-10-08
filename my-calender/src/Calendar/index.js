@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import { getPrevMonth, getPrevYear, getPrevTenYear, getNextMonth, getNextYear, getNextTenYear, getTimestamp } from './utils.js';
-import { SHOWING_STATE } from './config.js';
+import { SCROLL_DIRECTION, SHOWING_STATE, SWITCH_DIRECTION } from './config.js';
 import CalenderHeader from './components/calendar-head.js/calenderHead';
 import CalenderMain from './components/calendar-main.js/calenderMain';
 import CalendarTop from './components/calendar-top/calendarTop';
-import { shrinkEnlargeAni, carouselAni } from './animation.js';
 
 class Calender extends React.Component {
   constructor(props) {
@@ -20,26 +19,21 @@ class Calender extends React.Component {
       },
       curState: SHOWING_STATE.DAY,
       isShow: true,
+      switchDirection: '',
+      scrollDirection: '',
     };
     this.state.showDate = Object.assign({}, this.state.todayDate);
-    // x历体DOM
-    this.calendarBodyRef = React.createRef();
-    // 日历DOM
-    this.calendarDayRef = React.createRef();
-    // 月、年DOM
-    this.calendarMonthAndYearRef = React.createRef();
     // 整个日历组件DOM
     this.calendarRef = React.createRef();
   }
   // 点击x历头的处理函数
   forwordTransition() {
-    // console.log(this.calendarBodyRef);
     switch (this.state.curState) {
       case SHOWING_STATE.DAY:
-        shrinkEnlargeAni(this.calendarBodyRef.current, () => this.setState({ curState: SHOWING_STATE.MONTH }), 'calendar-main-tbody-shrink');
+        this.setState({ curState: SHOWING_STATE.MONTH, switchDirection: SWITCH_DIRECTION.FORWARD });
         break;
       case SHOWING_STATE.MONTH:
-        shrinkEnlargeAni(this.calendarBodyRef.current, () => this.setState({ curState: SHOWING_STATE.YEAR }), 'calendar-main-tbody-shrink');
+        this.setState({ curState: SHOWING_STATE.YEAR, switchDirection: SWITCH_DIRECTION.FORWARD });
         break;
       case SHOWING_STATE.YEAR:
         break;
@@ -49,72 +43,45 @@ class Calender extends React.Component {
   }
   // 点击上箭头的处理函数
   handleClickPrev() {
-    // 我希望能在这里用到表格组件的ref，然后再更改其高度什么的
     switch (this.state.curState) {
       case SHOWING_STATE.DAY:
-        carouselAni(
-          this.calendarDayRef.current,
-          () => {
-            this.setState({ showDate: Object.assign(this.state.showDate, getPrevMonth(this.state.showDate.year, this.state.showDate.month)) });
-          },
-          'carousel-day-prev'
-        );
+        this.setState({
+          showDate: Object.assign(this.state.showDate, getPrevMonth(this.state.showDate.year, this.state.showDate.month)),
+        });
         break;
       case SHOWING_STATE.MONTH:
-        carouselAni(
-          this.calendarMonthAndYearRef.current,
-          () => {
-            this.setState({ showDate: Object.assign(this.state.showDate, getPrevYear(this.state.showDate.year, this.state.showDate.month)) });
-          },
-          'carousel-month-and-year-prev'
-        );
+        this.setState({ showDate: Object.assign(this.state.showDate, getPrevYear(this.state.showDate.year, this.state.showDate.month)) });
         break;
       case SHOWING_STATE.YEAR:
-        carouselAni(
-          this.calendarMonthAndYearRef.current,
-          () => {
-            this.setState({ showDate: Object.assign(this.state.showDate, getPrevTenYear(this.state.showDate.year, this.state.showDate.month)) });
-          },
-          'carousel-month-and-year-prev'
-        );
+        this.setState({ showDate: Object.assign(this.state.showDate, getPrevTenYear(this.state.showDate.year, this.state.showDate.month)) });
         break;
       default:
         break;
     }
+    this.setState({ scrollDirection: SCROLL_DIRECTION.PREV });
   }
   // 点击下箭头的处理函数
   handleClickNext() {
     switch (this.state.curState) {
       case SHOWING_STATE.DAY:
-        carouselAni(
-          this.calendarDayRef.current,
-          () => {
-            this.setState({ showDate: Object.assign(this.state.showDate, getNextMonth(this.state.showDate.year, this.state.showDate.month)) });
-          },
-          'carousel-day-next'
-        );
+        this.setState({
+          showDate: Object.assign(this.state.showDate, getNextMonth(this.state.showDate.year, this.state.showDate.month)),
+        });
         break;
       case SHOWING_STATE.MONTH:
-        carouselAni(
-          this.calendarMonthAndYearRef.current,
-          () => {
-            this.setState({ showDate: Object.assign(this.state.showDate, getNextYear(this.state.showDate.year, this.state.showDate.month)) });
-          },
-          'carousel-month-and-year-next'
-        );
+        this.setState({
+          showDate: Object.assign(this.state.showDate, getNextYear(this.state.showDate.year, this.state.showDate.month)),
+        });
         break;
       case SHOWING_STATE.YEAR:
-        carouselAni(
-          this.calendarMonthAndYearRef.current,
-          () => {
-            this.setState({ showDate: Object.assign(this.state.showDate, getNextTenYear(this.state.showDate.year, this.state.showDate.month)) });
-          },
-          'carousel-month-and-year-next'
-        );
+        this.setState({
+          showDate: Object.assign(this.state.showDate, getNextTenYear(this.state.showDate.year, this.state.showDate.month)),
+        });
         break;
       default:
         break;
     }
+    this.setState({ scrollDirection: SCROLL_DIRECTION.NEXT });
   }
   // 点击年历、日历项的处理函数
   handleItemClick(data) {
@@ -125,35 +92,27 @@ class Calender extends React.Component {
         break;
       case SHOWING_STATE.MONTH:
         const month = data.slice(0, -1) - 1;
-        shrinkEnlargeAni(
-          this.calendarBodyRef.current,
-          () =>
-            this.setState({
-              showDate: {
-                year: this.state.showDate.year,
-                month: month,
-                date: this.state.showDate.date,
-              },
-              curState: SHOWING_STATE.DAY,
-            }),
-          'calendar-main-tbody-enlarge'
-        );
+        this.setState({
+          showDate: {
+            year: this.state.showDate.year,
+            month: month,
+            date: this.state.showDate.date,
+          },
+          curState: SHOWING_STATE.DAY,
+          switchDirection: SWITCH_DIRECTION.REVERSE,
+        });
         break;
       case SHOWING_STATE.YEAR:
         const year = Number(data);
-        shrinkEnlargeAni(
-          this.calendarBodyRef.current,
-          () =>
-            this.setState({
-              showDate: {
-                year: year,
-                month: this.state.showDate.month,
-                date: this.state.showDate.date,
-              },
-              curState: SHOWING_STATE.MONTH,
-            }),
-          'calendar-main-tbody-enlarge'
-        );
+        this.setState({
+          showDate: {
+            year: year,
+            month: this.state.showDate.month,
+            date: this.state.showDate.date,
+          },
+          curState: SHOWING_STATE.MONTH,
+          switchDirection: SWITCH_DIRECTION.REVERSE,
+        });
         break;
       default:
         break;
@@ -163,19 +122,18 @@ class Calender extends React.Component {
   // 点击顶部蓝字的处理函数
   init() {
     if (this.state.curState === SHOWING_STATE.MONTH) {
-      shrinkEnlargeAni(
-        this.calendarBodyRef.current,
-        () =>
-          this.setState({
-            showDate: Object.assign({}, this.state.todayDate),
-            curState: SHOWING_STATE.DAY,
-          }),
-        'calendar-main-tbody-enlarge'
-      );
+      this.setState({
+        showDate: Object.assign({}, this.state.todayDate),
+        curState: SHOWING_STATE.DAY,
+        switchDirection: SWITCH_DIRECTION.REVERSE,
+        scrollDirection: '',
+      });
     } else {
       this.setState({
         showDate: Object.assign({}, this.state.todayDate),
         curState: SHOWING_STATE.DAY,
+        switchDirection: SWITCH_DIRECTION.SKIP,
+        scrollDirection: '',
       });
     }
   }
@@ -218,9 +176,8 @@ class Calender extends React.Component {
               handleItemClick={(data) => {
                 this.handleItemClick(data);
               }}
-              calendarBodyRef={this.calendarBodyRef}
-              calendarDayRef={this.calendarDayRef}
-              calendarMonthAndYearRef={this.calendarMonthAndYearRef}
+              switchDirection={this.state.switchDirection}
+              scrollDirection={this.state.scrollDirection}
             />
           </div>
         )}

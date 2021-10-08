@@ -2,9 +2,10 @@ import React from 'react';
 import { WEEK } from '../../config';
 import CalendarDay from './calendar-day/calendarDay';
 import { CalendarMonth, CalendarYear } from './calendar-month-year/calendarMonthAndYear';
-import { SHOWING_STATE, NUM_OF_NEAR_YEARS } from '../../config.js';
+import { SHOWING_STATE, DIRECTION } from '../../config.js';
 import CalenderCaption from './calendar-caption/calendarCaption';
 import './calendarMain.scss';
+import { CSSTransition, SwitchTransition, TransitionGroup } from 'react-transition-group';
 
 // 日历头
 class CalenderColGroup extends React.Component {
@@ -24,10 +25,13 @@ class CalenderColGroup extends React.Component {
 class CalenderTbody extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isOn: true,
+    };
   }
-  // 来个props标记是正向还是反向，如果是正向，
   render() {
     let tbody = null;
+    console.log(111);
     switch (this.props.curState) {
       case SHOWING_STATE.DAY:
         tbody = (
@@ -35,49 +39,69 @@ class CalenderTbody extends React.Component {
             <div className="calendar-main-tbody-row">
               <CalenderColGroup />
             </div>
-            <CalendarDay
-              showDate={this.props.showDate}
-              todayDate={this.props.todayDate}
-              handleItemClick={(data) => {
-                this.props.handleItemClick(data);
-              }}
-              calendarDayRef={this.props.calendarDayRef}
-            />
+            <TransitionGroup
+              childFactory={(child) => React.cloneElement(child, { classNames: this.props.scrollDirection })}
+              className="calendar-main-tbody-daycontainer"
+            >
+              <CSSTransition timeout={200} key={this.props.showDate.month} classNames="next">
+                <CalendarDay
+                  showDate={this.props.showDate}
+                  todayDate={this.props.todayDate}
+                  handleItemClick={(data) => {
+                    this.props.handleItemClick(data);
+                  }}
+                />
+              </CSSTransition>
+            </TransitionGroup>
           </>
         );
         break;
       case SHOWING_STATE.MONTH:
         tbody = (
-          <CalendarMonth
-            showDate={this.props.showDate}
-            todayDate={this.props.todayDate}
-            handleItemClick={(data) => {
-              this.props.handleItemClick(data);
-            }}
-            calendarMonthAndYearRef={this.props.calendarMonthAndYearRef}
-          />
+          <TransitionGroup
+            childFactory={(child) => React.cloneElement(child, { classNames: this.props.scrollDirection })}
+            className="calendar-main-tbody-monthyearcontainer"
+          >
+            <CSSTransition timeout={200} key={this.props.showDate.year} classNames="next">
+              <CalendarMonth
+                showDate={this.props.showDate}
+                todayDate={this.props.todayDate}
+                handleItemClick={(data) => {
+                  this.props.handleItemClick(data);
+                }}
+              />
+            </CSSTransition>
+          </TransitionGroup>
         );
         break;
       case SHOWING_STATE.YEAR:
         tbody = (
-          <CalendarYear
-            showDate={this.props.showDate}
-            todayDate={this.props.todayDate}
-            handleItemClick={(data) => {
-              this.props.handleItemClick(data);
-            }}
-            calendarMonthAndYearRef={this.props.calendarMonthAndYearRef}
-          />
+          <TransitionGroup
+            childFactory={(child) => React.cloneElement(child, { classNames: this.props.scrollDirection })}
+            className="calendar-main-tbody-monthyearcontainer"
+          >
+            <CSSTransition timeout={200} key={this.props.showDate.year} classNames="next">
+              <CalendarYear
+                showDate={this.props.showDate}
+                todayDate={this.props.todayDate}
+                handleItemClick={(data) => {
+                  this.props.handleItemClick(data);
+                }}
+              />
+            </CSSTransition>
+          </TransitionGroup>
         );
         break;
       default:
         break;
     }
     return (
-      <div className="shrink-container">
-        <div className="calendar-main-tbody" ref={this.props.calendarBodyRef}>
-          {tbody}
-        </div>
+      <div>
+        <TransitionGroup childFactory={(child) => React.cloneElement(child, { classNames: this.props.switchDirection })}>
+          <CSSTransition timeout={400} key={this.props.curState}>
+            <div className="calendar-main-tbody">{tbody}</div>
+          </CSSTransition>
+        </TransitionGroup>
       </div>
     );
   }
@@ -105,9 +129,8 @@ class CalenderMain extends React.Component {
           handleItemClick={(data) => {
             this.props.handleItemClick(data);
           }}
-          calendarBodyRef={this.props.calendarBodyRef}
-          calendarDayRef={this.props.calendarDayRef}
-          calendarMonthAndYearRef={this.props.calendarMonthAndYearRef}
+          switchDirection={this.props.switchDirection}
+          scrollDirection={this.props.scrollDirection}
         />
       </div>
     );

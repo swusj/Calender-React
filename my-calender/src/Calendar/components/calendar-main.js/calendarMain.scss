@@ -12,8 +12,10 @@
     }
   }
   &-tbody {
-    width: 100%;
+    width: 334px;
     height: 295px;
+    // 这个position是为了
+    position: absolute;
     // background-color: blueviolet;
     display: flex;
     flex-direction: column;
@@ -78,21 +80,136 @@
         }
       }
     }
-    &-day {
+    &-daycontainer {
       position: relative;
       height: 252px;
+      // background-color: aqua;
       overflow: hidden;
     }
-    &-month-and-year {
-      height: 295px;
+    &-monthyearcontainer {
       position: relative;
+      height: 295px;
+      // background-color: aqua;
       overflow: hidden;
-    }
-    &-shrink {
-      animation: 0.5s shrink-1;
-    }
-    &-enlarge {
-      animation: 0.5s enlarge-1;
     }
   }
+}
+
+// 正向日历切换动画
+.forward-enter-active {
+  animation: 400ms shrink-1;
+  pointer-events: none;
+}
+
+.forward-exit {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: none;
+}
+
+.forward-exit-active {
+  opacity: 0;
+  transform: scale(0.75);
+  transition: all 200ms;
+}
+
+// 1.25->1
+@keyframes shrink-1 {
+  // 0%-50%都是在等待enter动画完
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// 反向日历切换动画
+.reverse-enter-active {
+  animation: 400ms enlarge;
+  pointer-events: none;
+}
+
+.reverse-exit {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: none;
+}
+
+.reverse-exit-active {
+  transform: scale(1.2);
+  opacity: 0;
+  transition: all 200ms;
+}
+
+// 0.75->1
+@keyframes enlarge {
+  // 0%-50%都是在等待enter动画完
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// 日历跳跃切换，无动画，如果不在这里设置的话，会新的旧的重叠timeout时间
+.skip-exit {
+  opacity: 0;
+}
+
+.skip-enter {
+  opacity: 1;
+}
+
+// 日历往下切换动画
+.next-enter {
+  transform: translateY(100%);
+  pointer-events: none;
+}
+
+.next-enter-active {
+  transform: translateY(0);
+  transition: all 200ms;
+}
+
+.next-exit {
+  transform: translateY(0);
+  pointer-events: none;
+}
+
+.next-exit-active {
+  transform: translateY(-100%);
+  transition: all 200ms;
+}
+
+// 日历往上切换动画
+.prev-enter {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+.prev-enter-active {
+  transform: translateY(0);
+  transition: all 200ms;
+}
+
+.prev-exit {
+  transform: translateY(0);
+  pointer-events: none;
+}
+
+.prev-exit-active {
+  transform: translateY(100%);
+  transition: all 200ms;
 }

@@ -59,24 +59,12 @@ class CalendarDay extends React.Component {
   }
   render() {
     const calData_now = createCalendarData(this.props.showDate, this.props.todayDate);
-    const calData_prev = createCalendarData(getPrevMonth(this.props.showDate.year, this.props.showDate.month), this.props.todayDate);
-    const calData_next = createCalendarData(getNextMonth(this.props.showDate.year, this.props.showDate.month), this.props.todayDate);
     let groupCalData_now = group(calData_now, NUM_OF_CANLENDER_ROW_ITEM);
-    let groupCalData_prev = group(calData_prev, NUM_OF_CANLENDER_ROW_ITEM);
-    let groupCalData_next = group(calData_next, NUM_OF_CANLENDER_ROW_ITEM);
     return (
       <div className="calendar-main-tbody-day">
-        <div className="carousel-day" ref={this.props.calendarDayRef}>
-          {groupCalData_prev.map((row, index) => {
-            return this.renderRow(row, index);
-          })}
-          {groupCalData_now.map((row, index) => {
-            return this.renderRow(row, index);
-          })}
-          {groupCalData_next.map((row, index) => {
-            return this.renderRow(row, index);
-          })}
-        </div>
+        {groupCalData_now.map((row, index) => {
+          return this.renderRow(row, index);
+        })}
       </div>
     );
   }

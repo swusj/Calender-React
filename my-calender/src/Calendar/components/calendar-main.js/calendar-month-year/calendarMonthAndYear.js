@@ -1,7 +1,8 @@
-import React from "react";
-import { NUM_OF_MONTH_YEAR_ROW_ITEM, NUM_OF_MONTH_YEAR_ITEM, NUM_OF_NEAR_YEARS, MONTH_NUM_OF_YEAR, ITEM_STATE } from "../../../config.js";
+import React from 'react';
+import { NUM_OF_MONTH_YEAR_ROW_ITEM, NUM_OF_MONTH_YEAR_ITEM, NUM_OF_NEAR_YEARS, MONTH_NUM_OF_YEAR, ITEM_STATE } from '../../../config.js';
 
-import { group, getPrevYear, getNextYear, getPrevTenYear, getNextTenYear } from "../../../utils.js";
+import { group } from '../../../utils.js';
+import './calendarMonthAndYear.scss';
 
 // 月、年日历项
 class CalendarMonthOrYearItem extends React.Component {
@@ -9,16 +10,16 @@ class CalendarMonthOrYearItem extends React.Component {
     super(props);
   }
   render() {
-    let itemClass = "";
+    let itemClass = '';
     switch (this.props.state) {
       case ITEM_STATE.NEARLY:
-        itemClass = "inactive";
+        itemClass = 'inactive';
         break;
       case ITEM_STATE.MIDDLE:
-        itemClass = "active";
+        itemClass = 'active';
         break;
       case ITEM_STATE.CURRENT:
-        itemClass = "month-and-year-light";
+        itemClass = 'month-and-year-light';
         break;
       default:
         break;
@@ -61,24 +62,12 @@ class CalendarMonth extends React.Component {
   }
   render() {
     const monthData_now = createMonthData(this.props.showDate, this.props.todayDate);
-    const monthData_prev = createMonthData(getPrevYear(this.props.showDate.year, this.props.showDate.month), this.props.todayDate);
-    const monthData_next = createMonthData(getNextYear(this.props.showDate.year, this.props.showDate.month), this.props.todayDate);
     let groupMonthData_now = group(monthData_now, NUM_OF_MONTH_YEAR_ROW_ITEM);
-    let groupMonthData_prev = group(monthData_prev, NUM_OF_MONTH_YEAR_ROW_ITEM);
-    let groupMonthData_next = group(monthData_next, NUM_OF_MONTH_YEAR_ROW_ITEM);
     return (
       <div className="calendar-main-tbody-month-and-year">
-        <div className="carousel-month-and-year" ref={this.props.calendarMonthAndYearRef}>
-          {groupMonthData_prev.map((row, index) => {
-            return this.renderRow(row, index);
-          })}
-          {groupMonthData_now.map((row, index) => {
-            return this.renderRow(row, index);
-          })}
-          {groupMonthData_next.map((row, index) => {
-            return this.renderRow(row, index);
-          })}
-        </div>
+        {groupMonthData_now.map((row, index) => {
+          return this.renderRow(row, index);
+        })}
       </div>
     );
   }
@@ -131,24 +120,12 @@ class CalendarYear extends React.Component {
   }
   render() {
     const yearData_now = createYearData(this.props.showDate, this.props.todayDate);
-    const yearData_prev = createYearData(getPrevTenYear(this.props.showDate.year, this.props.showDate.month), this.props.todayDate);
-    const yearData_next = createYearData(getNextTenYear(this.props.showDate.year, this.props.showDate.month), this.props.todayDate);
     let groupYearData_now = group(yearData_now, NUM_OF_MONTH_YEAR_ROW_ITEM);
-    let groupYearData_prev = group(yearData_prev, NUM_OF_MONTH_YEAR_ROW_ITEM);
-    let groupYearData_next = group(yearData_next, NUM_OF_MONTH_YEAR_ROW_ITEM);
     return (
       <div className="calendar-main-tbody-month-and-year">
-        <div className="carousel-month-and-year" ref={this.props.calendarMonthAndYearRef}>
-          {groupYearData_prev.map((row, index) => {
-            return this.renderRow(row, index);
-          })}
-          {groupYearData_now.map((row, index) => {
-            return this.renderRow(row, index);
-          })}
-          {groupYearData_next.map((row, index) => {
-            return this.renderRow(row, index);
-          })}
-        </div>
+        {groupYearData_now.map((row, index) => {
+          return this.renderRow(row, index);
+        })}
       </div>
     );
   }
@@ -159,7 +136,7 @@ function createYearData(showDate, todayDate) {
   let yearData = [];
   const INDEX = [3, 0, 1, 2];
   let leftYear = showDate.year - (showDate.year % NUM_OF_NEAR_YEARS); // 十年区间的第一年
-  let leftYearIndex = INDEX[leftYear % NUM_OF_MONTH_YEAR_ROW_ITEM]; // // 十年区间的第一年的位置
+  let leftYearIndex = INDEX[leftYear % NUM_OF_MONTH_YEAR_ROW_ITEM]; // 十年区间的第一年的位置
   const firstYear = leftYear - leftYearIndex; // 日历显示第一年
   for (let i = 0; i < NUM_OF_MONTH_YEAR_ITEM; i++) {
     // 如果当十年
